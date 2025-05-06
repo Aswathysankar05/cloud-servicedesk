@@ -1,22 +1,22 @@
-name: Push-SpringBootCode-to-EC2 instance from servicedesk branch
+name: Push-SpringBootCode-to-EC2 instance from dev branch
  
-# Trigger deployment only on push to servicedesk branch
+# Trigger deployment only on push to dev branch
 on:
   workflow_dispatch:  
   push:
     branches: 
-      - servicedesk
+      - dev
 
 jobs: 
   deploy:
-    name: Push to EC2 on servicedesk branch push
+    name: Push to EC2 on dev branch push
     runs-on: ubuntu-latest
 
     steps: 
       - name: Checkout the code
         uses: actions/checkout@v2
         with:
-          ref: servicedesk
+          ref: dev
       - name: Debug Secrets
         run: |
           echo "HOST_DNS: ${{ secrets.HOST_DNS }}"
@@ -29,8 +29,8 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           SOURCE: "./backend"
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: "serviceuser"
-          TARGET: "/home/serviceuser/"
+          REMOTE_USER: "devuser"
+          TARGET: "/home/devuser/"
           ARGS: "--rsync-path='sudo rsync'"
 
       - name: Executing remote ssh commands using ssh key
@@ -43,7 +43,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S apt update
             cd /home
             ls
-            cd serviceuser
+            cd devuser
             cd backend
             sudo mvn clean package
             sudo cp -r target/*  /var/www/html/target/
