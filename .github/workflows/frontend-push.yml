@@ -42,7 +42,7 @@ jobs:
             echo "${{ secrets.USER_PASSWORD }}" | sudo -S apt update
             cd /home
             ls
-            cd serviceuser
+            cd devuser
             cd frontend 
             sudo apt install npm 
             sudo npm install react-router-dom
@@ -58,5 +58,5 @@ jobs:
           source: "./dump/reactservicedeskdatabase_script_1.sql"
           target: "/home/devuser/"
           script:
-            mysql -u root -p ${{ secrets.MYSQL_PASSWORD }} reactservicedeskdatabase </home/serviceuser/dump/reactservicedeskdatabase_script_1.sql
+            mysql -u root -p ${{ secrets.MYSQL_PASSWORD }} reactservicedeskdatabase </home/devuser/dump/reactservicedeskdatabase_script_1.sql
             sudo systemctl restart mysql
