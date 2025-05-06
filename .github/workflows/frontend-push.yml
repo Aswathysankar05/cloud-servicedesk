@@ -1,22 +1,22 @@
-name: Push-Recactcode-to-EC2 instance from servicedesk branch
+name: Push-Recactcode-to-EC2 instance from dev branch
 
-# Trigger deployment only on push to servicedesk branch
+# Trigger deployment only on push to dev branch
 on:
   workflow_dispatch:
   push:
     branches:  
-      - servicedesk   
+      - dev   
  
 jobs:    
   deploy:  
-    name: Push to EC2 on servicedesk branch push 
+    name: Push to EC2 on dev branch push 
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
         with:
-          ref: servicedesk
+          ref: dev
       - name: Debug Secrets
         run: |
           echo "HOST_DNS: ${{ secrets.HOST_DNS }}" 
@@ -30,7 +30,7 @@ jobs:
           SOURCE: "./frontend"
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: "serviceuser"
-          TARGET: "/home/serviceuser/"
+          TARGET: "/home/devuser/"
 
       - name: Executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
@@ -56,7 +56,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "./dump/reactservicedeskdatabase_script_1.sql"
-          target: "/home/serviceuser/"
+          target: "/home/devuser/"
           script:
             mysql -u root -p ${{ secrets.MYSQL_PASSWORD }} reactservicedeskdatabase </home/serviceuser/dump/reactservicedeskdatabase_script_1.sql
             sudo systemctl restart mysql
