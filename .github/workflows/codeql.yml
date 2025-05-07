@@ -2,9 +2,9 @@ name: "CodeQL Security Scan"
 
 on:
   push:
-    branches: [servicedesk]
+    branches: [dev]
   pull_request:
-    branches: [servicedesk]
+    branches: [dev]
 
 jobs:
   analyze:
