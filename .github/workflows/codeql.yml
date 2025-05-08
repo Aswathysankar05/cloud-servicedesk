@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["CodeQL Security Scan"]
     types:
-      - completed
+      - completed 
   push:
     branches: [dev] 
   pull_request: 
