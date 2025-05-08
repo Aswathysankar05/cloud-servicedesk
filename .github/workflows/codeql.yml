@@ -23,17 +23,18 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+    
     - name: Build backend code (Maven)
       if: matrix.language == 'java'
       run: |
         cd backend
         ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
         
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
     
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
