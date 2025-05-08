@@ -27,7 +27,7 @@ jobs:
     - name: Build backend code (Maven)
       if: matrix.language == 'java'
       run: |
-      ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
+        ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
         
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
