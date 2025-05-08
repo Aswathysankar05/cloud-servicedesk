@@ -27,7 +27,7 @@ jobs:
     - name: Build backend code (Maven)
       if: matrix.language == 'java'
       run: |
-        cd /home/devuser/backend
+        cd backend
         ./mvnw clean compile -DskipTests || mvn clean compile -DskipTests
         
     - name: Initialize CodeQL
